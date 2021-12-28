@@ -64,7 +64,8 @@ def find_prefixes(file_in: typing.TextIO, separator: str, max_length: int, verbo
     dict
         liczba słów rozpoczynających się od danego przedrostka
     """
-    words_in = set([line.strip() for line in file_in])
+    comment = '#'
+    words_in = set([line.strip() for line in file_in if not line.startswith(comment)])
     if verbose:
         print('Unikalne słowa: ', words_in)
 
@@ -75,7 +76,7 @@ def find_prefixes(file_in: typing.TextIO, separator: str, max_length: int, verbo
 
     file_in.seek(0)  # Przewiń z powrotem na początek pliku
     for line_number, line in enumerate(file_in):
-        if line.startswith('#'):
+        if line.startswith(comment):
             continue  # Pomiń komentarze
 
         for length in range(1, max_length + 1):

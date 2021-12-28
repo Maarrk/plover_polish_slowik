@@ -1,0 +1,14 @@
+# Nie tworzą słowa
+ka=mień
+ka=za=nie
+kla=wia=tu=ra
+# Prosty przypadek
+nad=wa=ga
+prze=wa=ga
+wa=ga
+po=wie=lacz
+przed=wiecz=ny
+# Liczenie ile słów tworzy
+ko=pać
+prze=ko=pać
+wiecz=ny
