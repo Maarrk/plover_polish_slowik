@@ -5,9 +5,9 @@
   "split":  "-",
   # Unique characters for each key in steno order, moving left -> center -> right.
   # Right-side keys may re-use letters (but not symbols) from the left side.
-  "left":   "#STKPWHR",
-  "center": "AO*EU",
-  "right":  "FRPBLGTSDZ",
+  "left":   "#XFZSKTPVLR",
+  "center": "JE~*IAU",
+  "right":  "CRLBSGTWOY",
   # A special key that may ignore steno order. This has a large performance and accuracy cost.
   # Only the asterisk is typically used in such a way that this treatment is worth it.
   "special": "*",
@@ -16,12 +16,14 @@
   # so long as those characters are not used as real steno keys on that side.
   # After s-keys casing, each character in this table is replaced with its value.
   "aliases": {
-    "1": "#S",   "2": "#T",   "3": "#P",   "4": "#H",   "5": "#A",
-    "0": "#O",   "6": "#f",   "7": "#p",   "8": "#l",   "9": "#t",
-    "I": "EU",   "B": "PW",   "C": "K",    "D": "TK",   "F": "TP",
-    "G": "TKPW", "J": "SKWR", "L": "HR",   "M": "PH",   "N": "TPH",
-    "V": "SR",   "X": "KP",   "Y": "KWR",  "c": "bg",   "j": "pblg",
-    "k": "bg",   "m": "pl",   "n": "pb",   "v": "f",    "x": "bgs"
+    # Klawisze dla poszczególnych cyfr w tych samych miejscach
+    "1": "#Z",   "2": "#K",   "3": "#P",   "4": "#L",   "5": "#E",
+    "0": "#I",   "6": "#c",   "7": "#l",   "8": "#s",   "9": "#t",
+    # # TODO: przemyśleć które z naszych można tak zrobić
+    # "I": "EU",   "B": "PW",   "C": "K",    "D": "TK",   "F": "TP",
+    # "G": "TKPW", "J": "SKWR", "L": "HR",   "M": "PH",   "N": "TPH",
+    # "V": "SR",   "X": "KP",   "Y": "KWR",  "c": "bg",   "j": "pblg",
+    # "k": "bg",   "m": "pl",   "n": "pb",   "v": "f",    "x": "bgs"
   }
   # XXX multi-character aliases would be nice, but that requires more
   # than a call to str.translate(). *one* lexer is enough for now.
