@@ -6,13 +6,13 @@
   "b.":    ["XP",   "b",    "", "", "lewe B"],
   "c.":    ["ZT",   "c",    "", "", "lewe C"],
   "ci.":   ["ZTI",  "ci",   "", "", "lewe CI"],
-  "cj.":   ["ZTJ",  "cj",   "", "", "lewe CJ"],
+  "cj.":   ["ZTJ",  "cj",   "", "DUPLICATE", "lewe CJ"],
   "cz.":   ["PV",   "cz",   "", "", "lewe CZ"],
   "ć.":    ["TJ",   "ć",    "", "", "lewe Ć"],
   "d.":    ["XT",   "d",    "", "", "lewe D"],
   "dz.":   ["XZT",  "dz",   "", "", "lewe DZ"],
   "dzi.":  ["XZTJ", "dzi",  "", "", "lewe DZI"],
-  "dź.":   ["ZTJ",  "dź",   "", "REFERENCE", "lewe DŹ"],
+  "dź.":   ["ZTJ",  "dź",   "", "", "lewe DŹ"],
   "dż.":   ["XPV",  "dż",   "", "", "lewe DŻ"],
   "f.":    ["F",    "f",    "", "", "lewe F"],
   "g.":    ["XK",   "g",    "", "", "lewe G"],
@@ -502,7 +502,7 @@
   "y*": ["", "(y)(~LIT)",  "", "STROKE", "literowanie: `y`"],
   "z*": ["", "(z.)(~LIT)", "", "STROKE", "literowanie: `z`"],
   # TODO: JĘZYK: Jak literować `ż`?
-  "ż*": ["", "(rz.)(~LIT)", "", "STROKE", "literowanie: `ż`"],
+  "ż*": ["", "(ż|rz.)(~LIT)", "", "STROKE", "literowanie: `ż`"],
   "ź*": ["", "(ź.)(~LIT)", "", "STROKE", "literowanie: `ź`"],
 
   # Duże litery

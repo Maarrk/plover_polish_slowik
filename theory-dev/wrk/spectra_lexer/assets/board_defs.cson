@@ -46,6 +46,8 @@
                "textareas": [{"center": [28, 14],   "size": [50, 24],  "angle": 0}]},
     "wide":   {"d": "M0,0h56v13a13,13,0,0,1,-13,13h-30a13,13,0,0,1,-13,-13v-13z",
                "textareas": [{"center": [28, 13],   "size": [50, 24],  "angle": 0}]},
+    "wide-":  {"d": "M0,0h66v13a13,13,0,0,1,-13,13h-40a13,13,0,0,1,-13,-13v-13z",
+               "textareas": [{"center": [33, 13],   "size": [60, 24],  "angle": 0}]},
     "3rect":  {"d": "M0,0h86v26h-86v-26z",
                "textareas": [{"center": [43, 14],   "size": [80, 24],  "angle": 0}]},
     "3wide":  {"d": "M0,0h86v13a13,13,0,0,1,-13,13h-60a13,13,0,0,1,-13,-13v-13z",
@@ -73,8 +75,15 @@
     "r_r":    {"d": "M0,0h86v13a13,13,0,0,1,-26,0h-34a13,13,0,0,1,-26,0v-13z",
                "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
                              {"center": [43, 6.5],  "size": [80, 12],  "angle": 0}]},
+    "r_tall": {"d": "M0 0h86v43a13 13 0 01-26 0v-30h-34a13 13 0 01-26 0v-13z",
+               "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
+                             {"center": [43, 28],   "size": [20, 24],  "angle": 0},
+                             {"center": [43, 28],   "size": [45, 20],  "angle": -90}]},
     "r-rr":    {"d": "M0,0h126v13a13,13,0,0,1,-13,13h-30a13,13,0,0,1,-13,-13h-44a13,13,0,0,1,-26,0v-13z",
                "textareas": [{"center": [88, 13],  "size": [50, 24],  "angle": 0}]},
+    "r-_r":    {"d": "M0 0h126v13a13 13 0 01-13 13 13 13 0 01-13-13h-74a13 13 0 01-26 0v-13z",
+               "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
+                             {"center": [63, 6.5],  "size": [110, 12], "angle": 0}]},
     "r__r":   {"d": "M0,0h116v13a13,13,0,0,1,-26,0h-64a13,13,0,0,1,-26,0v-13z",
                "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
                              {"center": [58, 6.5],  "size": [110, 12], "angle": 0}]},
@@ -83,7 +92,10 @@
                              {"center": [28, 27],   "size": [50, 18],  "angle": 45}]},
     "diag-":  {"d": "M0,0v26h13l17,17a-13,13,0,0,0,26,0v-13h-13l-17,-17v-13h-26z",
                "textareas": [{"center": [28, 27],   "size": [12, 24],  "angle": 0},
-                             {"center": [28, 27],   "size": [50, 18],  "angle": -45}]}},
+                             {"center": [28, 27],   "size": [50, 18],  "angle": -45}]},
+    "diag-_":  {"d": "M0 0v26h13l47 17a-13 13 0 0026 0v-13h-13l-47-17v-13h-26z",
+               "textareas": [{"center": [43, 27],   "size": [12, 24],  "angle": 0},
+                             {"center": [43, 27],   "size": [50, 18],  "angle": -20}]}},
 
   # Sizing properties for the glyphs. Paths are defined with an em box of 1000 units, upward positive.
   # Tracking (horizontal spacing) is 600 units. The baseline is y=0; descenders go 200 units below that.
@@ -274,7 +286,19 @@
     "o":      {"pos": "o",  "shape": "square"},
     "y":      {"pos": "y",  "shape": "round"},
     "AU":     {"pos": "A",  "shape": "wide"},
-    "EAU":    {"pos": "E",  "shape": "r-rr"}
+    "EAU":    {"pos": "E",  "shape": "r-rr"},
+    "XP":     {"pos": "X",  "shape": "r__r"},
+    "ZT":     {"pos": "Z",  "shape": "diag-"},
+    "XT":     {"pos": "X",  "shape": "diag-_"},
+    "XK":     {"pos": "X",  "shape": "r_r"},
+    "TV":     {"pos": "T",  "shape": "wide"},
+    "LR":     {"pos": "L",  "shape": "tall"},
+    "SK":     {"pos": "Z",  "shape": "diag+"},
+    "IA":     {"pos": "I",  "shape": "wide-"},
+    "EI":     {"pos": "E",  "shape": "wide-"},
+    "EU":     {"pos": "E",  "shape": "r-_r"},
+    "KT":     {"pos": "K",  "shape": "tall"},
+    "XKT":    {"pos": "X",  "shape": "r_tall"}
     # TODO: Definiować zlepki liter w miarę używania ich w teorii
   }
 }
