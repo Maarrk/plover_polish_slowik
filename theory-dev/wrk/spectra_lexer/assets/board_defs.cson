@@ -69,6 +69,8 @@
     "r_r":    {"d": "M0,0h86v13a13,13,0,0,1,-26,0h-34a13,13,0,0,1,-26,0v-13z",
                "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
                              {"center": [43, 6.5],  "size": [80, 12],  "angle": 0}]},
+    "r_rr":    {"d": "M0,0h116v13a13,13,0,0,1,-13,13h-30a13,13,0,0,1,-13,-13h-34a13,13,0,0,1,-26,0v-13z",
+               "textareas": [{"center": [88, 13],  "size": [50, 24],  "angle": 0}]},
     "r__r":   {"d": "M0,0h116v13a13,13,0,0,1,-26,0h-64a13,13,0,0,1,-26,0v-13z",
                "textareas": [{"center": [13, 13],   "size": [20, 24],  "angle": 0},
                              {"center": [58, 6.5],  "size": [110, 12], "angle": 0}]},
@@ -250,6 +252,9 @@
     "t":      {"pos": "t",  "shape": "square"},
     "w":      {"pos": "w",  "shape": "round"},
     "o":      {"pos": "o",  "shape": "square"},
-    "y":      {"pos": "y",  "shape": "round"}}
+    "y":      {"pos": "y",  "shape": "round"},
+    "AU":     {"pos": "A",  "shape": "wide"},
+    "EAU":    {"pos": "E",  "shape": "r_rr"}
     # TODO: Definiować zlepki liter w miarę używania ich w teorii
+  }
 }

@@ -18,7 +18,7 @@
   "aliases": {
     # Klawisze dla poszczególnych cyfr w tych samych miejscach
     "1": "#Z",   "2": "#K",   "3": "#P",   "4": "#L",   "5": "#E",
-    "0": "#I",   "6": "#c",   "7": "#l",   "8": "#s",   "9": "#t",
+    "0": "#I",   "6": "#c",   "7": "#l",   "8": "#s",   "9": "#t"
     # # TODO: przemyśleć które z naszych można tak zrobić
     # "I": "EU",   "B": "PW",   "C": "K",    "D": "TK",   "F": "TP",
     # "G": "TKPW", "J": "SKWR", "L": "HR",   "M": "PH",   "N": "TPH",
