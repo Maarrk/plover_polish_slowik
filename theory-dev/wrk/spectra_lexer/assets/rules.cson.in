@@ -1,90 +1,48 @@
 # SZABLON: Ten plik zawiera zasady bez zdefiniowanych klawiszy. Przed użyciem w spectra_lexer, należy go przetworzyć skryptem generuj_slownik.py
 {
-  # # Standard rules - left side
-  # "s.":   ["S",     "s",       "",    "",     "left side S"],
-  # "ss.":  ["S",     "ss",      "",    "",     "left side S"],
-  # "c!":   ["S",     "c",       "",    "",     "can be soft `c`"],
-  # "x-.":  ["S",     "x",       "",    "",     "can be soft `x`"],
-  # "ex+":  ["S",     "ex",      "",    "",     "slurred `ex` (SABGT → exact)"],
-  # "z+":   ["S",     "z",       "",    "",     "phonetic S"],
-
-  # "t.":   ["T",     "t",       "",    "",     "left side T"],
-  # "tt.":  ["T",     "tt",      "",    "",     "left side T"],
-
-  # "k.":   ["K",     "k",       "",    "",     "left side K"],
-  # "c.":   ["K",     "c",       "",    "",     "can be hard `c`"],
-  # "q.":   ["K",     "q",       "",    "",     "can be `q`"],
-  # "ch+":  ["K",     "ch",      "",    "",     "phonetic K"],
-  # "com.": ["K",     "com",     "",    "",     "shortening of `com`; must not conflict with other words using K (K-FRT → comfort)"],
-  # "con.": ["K",     "con",     "",    "",     "shortening of `con`; must not conflict with other words using K"],
-  # "cons.":["K",     "(con.)s", "",    "",     "shortening of `cons`; must not conflict with other words using K"],
-  # "cont.":["K",     "(con.)t", "",    "",     "shortening of `cont`; must not conflict with other words using K"],
-
-  # "p.":   ["P",     "p",       "",    "",     "left side P"],
-  # "pp.":  ["P",     "pp",      "",    "",     "left side P"],
-
-  # "w.":   ["W",     "w",       "",    "",     "left side W"],
-  # "u.":   ["W",     "u",       "",    "",     "phonetic W onset"],
-  # "v.+":  ["W",     "v",       "V",   "RARE", "rarely used as middle V (TKWOUR → devour, KAUPB/WHRAOUGS → convolution)"],
-
-  # "h.":   ["H",     "h",       "",    "",     "left side H"],
-
-  # "r.":   ["R",     "r",       "",    "",     "left side R"],
-  # "rr.":  ["R",     "rr",      "",    "",     "left side R"],
-  # "rep.": ["R",     "(r.)ep",  "",    "",     "drop `e` and consonant for common `re` words"],
-  # "ret.": ["R",     "(r.)et",  "",    "",     "drop `e` and consonant for common `re` words"],
-
-  # "c!+":  ["KR",    "c",       "C",   "RARE", "left side C; disambiguates soft `c` vs. `s`"],
-
-  # "v.":   ["SR",    "v",       "V",   "",     "left side V"],
-
-  # "d.":   ["TK",    "d",       "D",   "",     "left side D"],
-  # "dd.":  ["TK",    "dd",      "D"  , "",     "left side D"],
-
-  # "f.":   ["TP",    "f",       "F",   "",     "left side F"],
-  # "ff.":  ["TP",    "ff",      "F",   "",     "left side F"],
-  # "ph.":  ["TP",    "ph",      "F",   "",     "`ph`onetic F"],
-
-  # "x.":   ["KP",    "x",       "X",   "",     "left side X"],
-  # "cc+":  ["KP",    "cc",      "X",   "",     "phonetic X"],
-  # "ex.":  ["KP",    "e(x.)",   "",    "",     "included vowel sound"],
-  # "exc.": ["KP",    "(ex.)c",  "",    "",     "merged consonant sounds"],
-  # "ext.": ["KP",    "(ex.)t",  "",    "",     "shortening of `ext`; must not conflict with other words using KP"],
-
-  # "b.":   ["PW",    "b",       "B",   "",     "left side B"],
-  # "bb.":  ["PW",    "bb",      "B",   "",     "left side B"],
-
-  # "m.":   ["PH",    "m",       "M",   "",     "left side M"],
-  # "mm.":  ["PH",    "mm",      "M",   "",     "left side M"],
-
-  # "l.":   ["HR",    "l",       "L",   "",     "left side L"],
-  # "ll.":  ["HR",    "ll",      "L",   "",     "left side L"],
-
-  # "n.":   ["TPH",   "n",       "N",   "",     "left side N"],
-  # "nn.":  ["TPH",   "nn",      "N",   "",     "left side N"],
-  # "gn.":  ["TPH",   "g(n.)",   "",    "",     "`g` is silent"],
-  # "kn.":  ["TPH",   "k(n.)",   "",    "",     "`k` is silent"],
-  # "in.":  ["TPH",   "i(n.)",   "",    "",     "included vowel sound"],
-  # "en.":  ["TPH",   "e(n.)",   "",    "",     "included vowel sound (TPHERPBLG → energy)"],
-
-  # "y.":   ["KWR",   "y",       "Y",   "",     "left side Y"],
-  # "i.":   ["KWR",   "i",       "Y",   "RARE", "phonetic Y onset"],
-  # "e.":   ["KWR",   "e",       "Y",   "RARE", "phonetic Y onset"],
-
-  # "j.":   ["SKWR",  "j",       "J",   "",     "left side J"],
-  # "g!":   ["SKWR",  "g",       "J",   "",     "J can be soft `g`"],
-
-  # "g.":   ["TKPW",  "g",       "G",   "",     "left side G"],
-  # "gg.":  ["TKPW",  "gg",      "G",   "",     "left side G"],
-  # "gh.":  ["TKPW",  "(g.)h",   "",    "",     "`h` is silent"],
-
-  # "z.":   ["S*",    "z",       "Z",   "",     "left side Z"],
-  # "zz.":  ["S*",    "zz",      "Z",   "",     "left side Z"],
-
-  # "z!":   ["STKPW", "z",       "Z",   "",     "left side Z when asterisk is used on right side (STKPW*EUPBG → zinc)"],
-
-  # "int.": ["SPW",   "int",     "INT", "",     "left side INT prefix (SPWELGT → intelligent)"],
-  # "ent.": ["SPW",   "ent",     "INT", "",     "left side INT prefix (SPWER → enter)"],
+  # Definicje nagłosów - lewa strona
+  # Na podstawie onsets-slovik.ods
+  # TODO: JĘZYK: Dać przykłady w info, por. samogłoski poniżej
+  "b.":    ["XP",   "b",    "", "", "lewe B"],
+  "c.":    ["ZT",   "c",    "", "", "lewe C"],
+  "ci.":   ["ZTI",  "ci",   "", "", "lewe CI"],
+  "cj.":   ["ZTJ",  "cj",   "", "", "lewe CJ"],
+  "cz.":   ["PV",   "cz",   "", "", "lewe CZ"],
+  "ć.":    ["TJ",   "ć",    "", "", "lewe Ć"],
+  "d.":    ["XT",   "d",    "", "", "lewe D"],
+  "dz.":   ["XZT",  "dz",   "", "", "lewe DZ"],
+  "dzi.":  ["XZTJ", "dzi",  "", "", "lewe DZI"],
+  "dź.":   ["ZTJ",  "dź",   "", "REFERENCE", "lewe DŹ"],
+  "dż.":   ["XPV",  "dż",   "", "", "lewe DŻ"],
+  "f.":    ["F",    "f",    "", "", "lewe F"],
+  "g.":    ["XK",   "g",    "", "", "lewe G"],
+  "h.":    ["XKT",  "h",    "", "", "lewe H"],
+  "ch.":   ["KT",   "ch",   "", "", "lewe CH"],
+  "j.":    ["J",    "j",    "", "", "lewe J"],
+  "k.":    ["K",    "k",    "", "", "lewe K"],
+  "l.":    ["L",    "l",    "", "", "lewe L"],
+  "ł.":    ["LJ",   "ł",    "", "", "lewe Ł"],
+  "m.":    ["TV",   "m",    "", "", "lewe M"],
+  "n.":    ["LR",   "n",    "", "", "lewe N"],
+  "p.":    ["P",    "p",    "", "", "lewe P"],
+  "r.":    ["R",    "r",    "", "", "lewe R"],
+  "s.":    ["S",    "s",    "", "", "lewe S"],
+  "sz.":   ["TP",   "sz",   "", "", "lewe SZ"],
+  "szcz.": ["TPV",  "szcz", "", "", "lewe SZCZ"],
+  "ś.":    ["XSJ",  "ś",    "", "", "lewe Ś"],
+  "si.":   ["SJ",   "si",   "", "", "lewe SI"],
+  "sj.":   ["SJ~",  "sj",   "", "", "lewe SJ"],
+  "śc.":   ["ZST",  "śc",   "", "", "lewe ŚC"],
+  "ści.":  ["ZSTJ", "ści",  "", "", "lewe ŚCI"],
+  "t.":    ["T",    "t",    "", "", "lewe T"],
+  "w.":    ["V",    "w",    "", "", "lewe W"],
+  "x.":    ["SK",   "x",    "", "", "lewe X"],
+  "z.":    ["Z",    "z",    "", "", "lewe Z"],
+  "ź.":    ["ZI",   "ź",    "", "", "lewe Ź"],
+  "zi.":   ["ZJ",   "zi",   "", "", "lewe ZI"],
+  "zj.":   ["ZJ~",  "zj",   "", "", "lewe ZJ"],
+  "ździ.": ["ZST",  "ździ", "", "REFERENCE", "lewe ŹDZI"],
+  "rz.":   ["RJ",   "rz",   "", "", "lewe RZ"],
 
   # # Standard rules - right side
   # ".f":   ["-F",    "f",      "",    "",     "right side F"],
@@ -148,7 +106,7 @@
 
   # ".m":   ["-PL",   "m",      "M",   "",     "right side M"],
   # ".mm":  ["-PL",   "mm",     "M",   "",     "right side M"],
-  
+
   # ".k":   ["-BG",   "k",      "K",   "",     "right side K"],
   # ".c":   ["-BG",   "c",      "K",   "",     "K can be hard `c`"],
   # ".cc":  ["-BG",   "cc",     "K",   "",     "K can be hard `c`"],
@@ -222,68 +180,44 @@
 
   # ".ction+": ["*BGS",    "ction",  "KSHUN", "", "the KSHUN sound; asterisk disambiguates vs. X when necessary"],
 
-  # # Standard rules - vowels
-  # "a":   ["A",    "a",     "",   "",      "`a` as in `man`"],
-
-  # "o":   ["O",    "o",     "",   "",      "usually `o` as in `dot`; may be used for other `o` sounds."],
-  # "oth": ["O",    "(o)th", "",   "",      "drop middle `th` (PHOER → mother)"],
-
-  # "e":   ["E",    "e",     "",   "",      "`e` as in `hen`"],
-  # "ea":  ["E",    "ea",    "",   "",      "`ea` as in 'bread`"],
-  # "ie":  ["E",    "ie",    "",   "",      "`ie` as in `friend`"],
-  # "a+":  ["E",    "a",     "",   "RARE",  "neutral vowel (or misstroke)"],
-
-  # "u":   ["U",    "u",     "",   "",      "`u` as in `under`"],
-  # "ou+": ["U",    "ou",    "",   "",      "`ou` as in `trouble`"],
-  # "o+":  ["U",    "o",     "",   "RARE",  "`o` as in `love`"],
-
-  # "i":   ["EU",   "i",     "I", "",       "`i` as in `lint`"],
-  # "y":   ["EU",   "y",     "I", "",       "`y` as used at the end of words"],
-  # "ui":  ["EU",   "ui",    "I", "",       "`ui` as in `build`"],
-
-  # "a!":  ["AEU",  "a",     "A", "",       "`a` as in `vary`"],
-  # "ae":  ["AEU",  "ae",    "A", "",       "`ae` as in `aerial`"],
-  # "ai":  ["AEU",  "ai",    "A", "",       "`ai` as in `fair`"],
-  # "ay":  ["AEU",  "ay",    "A", "",       "`ay` as in `stay`"],
-  # "ei":  ["AEU",  "ei",    "A", "",       "`ei` as in `their`"],
-  # "ey+": ["AEU",  "ey",    "A", "",       "`ey` as in `grey`"],
-  # "et":  ["AEU",  "et",    "A", "",       "`et` as in `ballet`"],
-  # "ee+": ["AEU",  "ee",    "A", "",       "`ee` as in `fiancee`"],
-  # "e+":  ["AEU",  "e",     "A", "RARE",   "`e` as in `fiance`"],
-
-  # "o!":  ["OE",   "o",     "O", "",       "`o` as in `stone`"],
-  # "oa":  ["OE",   "oa",    "O", "",       "`oa` as in `float`"],
-  # "oe":  ["OE",   "oe",    "O", "",       "`oe` as in `foe`"],
-  # "ow+": ["OE",   "ow",    "O", "",       "`ow` as in `own`"],
-  # "eau": ["OE",   "eau",   "O", "",       "`eau` as in `tableau`"],
-
-  # "e!":  ["AOE",  "e",     "E", "",       "`e` as in `hero`"],
-  # "ea!": ["AOE",  "ea",    "E", "",       "`ea` as in `deal`"],
-  # "ee":  ["AOE",  "ee",    "E", "",       "`ee` as in `feel`"],
-  # "ey":  ["AOE",  "ey",    "E", "",       "`ey` as in `monkey`"],
-  # "ae+": ["AOE",  "ae",    "E", "",       "`ae` as in `Caesar`"],
-  # "ie!": ["AOE",  "ie",    "E", "",       "`ie` as in `thief` (PWHRAOEF → belief)"],
-  # "i+":  ["AOE",  "i",     "E", "RARE",   "`i` as in `fatigue` (SPWRAOEG → intrigue)"],
-
-  # "u!":  ["AOU",  "u",     "U", "",       "`u` as in `fuse`"],
-  # "ew":  ["AOU",  "ew",    "U", "",       "`ew` as in `lewd`"],
-  # "eu":  ["AOU",  "eu",    "U", "",       "`eu` as in `maneuver`"],
-  # "ue":  ["AOU",  "ue",    "U", "",       "`ue` as in `fuel`"],
-  # "uu":  ["AOU",  "uu",    "U", "",       "`uu` as in `vacuum`"],
-  # "o++": ["AOU",  "o",     "U", "RARE",   "`o` as in `lose` (WAOUPL → womb)"],
-
-  # "i!":  ["AOEU", "i",     "I", "",       "`i` as in `might`"],
-  # "y!":  ["AOEU", "y",     "I", "",       "`y` as in `fly`"],
-  # "ai!": ["AOEU", "ai",    "I", "",       "`ai` as in `haiku`"],
-  # "ei!": ["AOEU", "ei",    "I", "",       "`ei` as in `heist`"],
-  # "ae!": ["AOEU", "ae",    "I", "",       "`ae` as in `plantae`"],
-
-  # "au":  ["AU",   "au",    "",  "",       "`au` as in `haunt`"],
-  # "aw":  ["AU",   "aw",    "",  "",       "`aw` as in `dawn`"],
-  # "a++": ["AU",   "a",     "",  "RARE",   "`a` as in `all` (KAUL → call)"],
-
-  # "ou":  ["OU",   "ou",    "",  "",       "`ou` as in `ouch`"],
-  # "ow":  ["OU",   "ow",    "",  "",       "`ow` as in `down`"],
+  # Definicje głosów (samogłosek) - środek
+  # Na podstawie samogloski.ods:JEIAU-mid
+  "j":  ["J",   "j" , "", "REFERENCE", "zmiękczające/uższypiające: siaki, szyk, spiek"],
+  "e":  ["E",   "e" , "", "", "`e` jak `bela`"],
+  "i":  ["I",   "i" , "", "", "`i` jak `bila`"],
+  # TODO: JĘZYK: Dostosować info dla pozostałych samogłosek
+  "a":  ["A",   "a" , "", "", "bal"],
+  "u":  ["U",   "u" , "", "", ""],
+  "ó":  ["U",   "ó" , "", "REFERENCE", "ból"],
+  "o":  ["AU",  "o" , "", "", "bok"],
+  "ę":  ["EI",  "ę" , "", "", "pęk, wejście"],
+  "ą":  ["IA",  "ą" , "", "", "wąski, ojczyzna"],
+  "y":  ["EU",  "y" , "", "", "pysk"],
+  "ia": ["JA",  "ia", "", "DUPLICATE", "piach, płachta, wszak"],
+  "ja": ["JA",  "ja", "", "DUPLICATE", ""],
+  "ya": ["JA",  "ya", "", "DUPLICATE", ""],
+  "ie": ["JE",  "ie", "", "DUPLICATE", "piec, chłeptać, wrzeszczeć, szelak"],
+  "je": ["JE",  "je", "", "DUPLICATE", ""],
+  "ye": ["JE",  "ye", "", "DUPLICATE", ""],
+  "io": ["JAU", "io", "", "DUPLICATE", "piosenka, chłop, wrzos, szok"],
+  "jo": ["JAU", "jo", "", "DUPLICATE", ""],
+  "yo": ["JAU", "yo", "", "DUPLICATE", ""],
+  "iu": ["JU",  "iu", "", "DUPLICATE", "miód, przód, wrzód"],
+  "ju": ["JU",  "ju", "", "DUPLICATE", ""],
+  "yu": ["JU",  "yu", "", "DUPLICATE", ""],
+  "ió": ["JU",  "ió", "", "DUPLICATE", ""],
+  "jó": ["JU",  "jó", "", "DUPLICATE", ""],
+  "yó": ["JU",  "yó", "", "DUPLICATE", ""],
+  "ii": ["JI",  "ii", "", "DUPLICATE", "Jidysz?, szyk, łyk, nik + ew. końcówki: żmii, frezji, spacji"],
+  "ji": ["JI",  "ji", "", "DUPLICATE", ""],
+  "yi": ["JI",  "yi", "", "DUPLICATE", ""],
+  "jy": ["JI",  "jy", "", "DUPLICATE", ""],
+  "ię": ["JEI", "ię", "", "DUPLICATE", "pięść, rzęsa, łęgi"],
+  "ję": ["JEI", "ję", "", "DUPLICATE", ""],
+  "yę": ["JEI", "yę", "", "DUPLICATE", ""],
+  "ią": ["JIA", "ią", "", "DUPLICATE", "piąstki, łąka, jojczyć, ijon, kijowska, poi,"],
+  "ją": ["JIA", "ją", "", "DUPLICATE", ""],
+  "yą": ["JIA", "yą", "", "DUPLICATE", ""],
 
   # # Orthographic rules - vowels
   # "oo":  ["AO", "oo", "OO", "",     "spelling of `oo` is always AO"],
@@ -522,69 +456,91 @@
   # "they":   ["THE",    "(t.)(h.)(e)y",   "", "WORD", "common brief"],
   # "were":   ["W-R",    "(w.)e(.r)e",     "", "WORD", "common brief"],
 
-  # # fingerspelling reference rules
-  # "~FS": ["*",   "",  "*", "REFERENCE", "use with left-side keys and vowels for fingerspelling"],
-  # "~UP": ["-P",  "",  "↑", "REFERENCE", "use to capitalize fingerspelled letters"],
-  # "q~":  ["KW",  "q", "",  "REFERENCE", "fingerspelling root for `q`"],
-  # "z~":  ["STK", "z", "Z", "REFERENCE", "fingerspelling root for `z`"],
+  # Główne zasady dla literowania
+  "~LIT": ["*",   "",  "*", "REFERENCE", "używaj z klawiszami po lewej i samogłoskami żeby literować"],
+  "~ALT": ["~",   "",  "",  "REFERENCE", "wybierz drugą literę o tym brzmieniu"],
+  "~DUŻ": ["-L",  "",  "↑", "REFERENCE", "używaj żeby literować wielkimi literami"],
 
-  # # lowercase letters - these rules must match full strokes exactly so that they don't get confused for other rules
-  # "a*": ["A*",     "(a)(~FS)",  "", "STROKE", "fingerspelling: `a`"],
-  # "b*": ["PW*",    "(b.)(~FS)", "", "STROKE", "fingerspelling: `b`"],
-  # "c*": ["KR*",    "(c!+)(~FS)","", "STROKE", "fingerspelling: `c`"],
-  # "d*": ["TK*",    "(d.)(~FS)", "", "STROKE", "fingerspelling: `d`"],
-  # "e*": ["*E",     "(e)(~FS)",  "", "STROKE", "fingerspelling: `e`"],
-  # "f*": ["TP*",    "(f.)(~FS)", "", "STROKE", "fingerspelling: `f`"],
-  # "g*": ["TKPW*",  "(g.)(~FS)", "", "STROKE", "fingerspelling: `g`"],
-  # "h*": ["H*",     "(h.)(~FS)", "", "STROKE", "fingerspelling: `h`"],
-  # "i*": ["*EU",    "(i)(~FS)",  "", "STROKE", "fingerspelling: `i`"],
-  # "j*": ["SKWR*",  "(j.)(~FS)", "", "STROKE", "fingerspelling: `j`"],
-  # "k*": ["K*",     "(k.)(~FS)", "", "STROKE", "fingerspelling: `k`"],
-  # "l*": ["HR*",    "(l.)(~FS)", "", "STROKE", "fingerspelling: `l`"],
-  # "m*": ["PH*",    "(m.)(~FS)", "", "STROKE", "fingerspelling: `m`"],
-  # "n*": ["TPH*",   "(n.)(~FS)", "", "STROKE", "fingerspelling: `n`"],
-  # "o*": ["O*",     "(o)(~FS)",  "", "STROKE", "fingerspelling: `o`"],
-  # "p*": ["P*",     "(p.)(~FS)", "", "STROKE", "fingerspelling: `p`"],
-  # "q*": ["KW*",    "(q~)(~FS)", "", "STROKE", "fingerspelling: `q`"],
-  # "r*": ["R*",     "(r.)(~FS)", "", "STROKE", "fingerspelling: `r`"],
-  # "s*": ["S*",     "(s.)(~FS)", "", "STROKE", "fingerspelling: `s`"],
-  # "t*": ["T*",     "(t.)(~FS)", "", "STROKE", "fingerspelling: `t`"],
-  # "u*": ["*U",     "(u)(~FS)",  "", "STROKE", "fingerspelling: `u`"],
-  # "v*": ["SR*",    "(v.)(~FS)", "", "STROKE", "fingerspelling: `v`"],
-  # "w*": ["W*",     "(w.)(~FS)", "", "STROKE", "fingerspelling: `w`"],
-  # "x*": ["KP*",    "(x.)(~FS)", "", "STROKE", "fingerspelling: `x`"],
-  # "y*": ["KWR*",   "(y.)(~FS)", "", "STROKE", "fingerspelling: `y`"],
-  # "z*": ["STK*",   "(z~)(~FS)", "", "STROKE", "fingerspelling: `z`"],
+  # Ponieważ `ń` nie może się pojawić przed samogłoską, musi mieć inną definicję po lewej
+  "ń~":   ["LRJ", "ń", "",  "REFERENCE", "podstawa literowania dla `ń`"],
+  # TODO: JĘZYK: Jak literować `q` i `v`?
+  "q~":   ["K~",  "q", "",  "REFERENCE", "podstawa literowania dla `q`"],
+  "v~":   ["V~",  "v", "",  "REFERENCE", "podstawa literowania dla `v`"],
 
-  # # capital letters
-  # "A*": ["A*P",    "(a*)(~UP)", "", "STROKE", "fingerspelling: `A`"],
-  # "B*": ["PW*P",   "(b*)(~UP)", "", "STROKE", "fingerspelling: `B`"],
-  # "C*": ["KR*P",   "(c*)(~UP)", "", "STROKE", "fingerspelling: `C`"],
-  # "D*": ["TK*P",   "(d*)(~UP)", "", "STROKE", "fingerspelling: `D`"],
-  # "E*": ["*EP",    "(e*)(~UP)", "", "STROKE", "fingerspelling: `E`"],
-  # "F*": ["TP*P",   "(f*)(~UP)", "", "STROKE", "fingerspelling: `F`"],
-  # "G*": ["TKPW*P", "(g*)(~UP)", "", "STROKE", "fingerspelling: `G`"],
-  # "H*": ["H*P",    "(h*)(~UP)", "", "STROKE", "fingerspelling: `H`"],
-  # "I*": ["*EUP",   "(i*)(~UP)", "", "STROKE", "fingerspelling: `I`"],
-  # "J*": ["SKWR*P", "(j*)(~UP)", "", "STROKE", "fingerspelling: `J`"],
-  # "K*": ["K*P",    "(k*)(~UP)", "", "STROKE", "fingerspelling: `K`"],
-  # "L*": ["HR*P",   "(l*)(~UP)", "", "STROKE", "fingerspelling: `L`"],
-  # "M*": ["PH*P",   "(m*)(~UP)", "", "STROKE", "fingerspelling: `M`"],
-  # "N*": ["TPH*P",  "(n*)(~UP)", "", "STROKE", "fingerspelling: `N`"],
-  # "O*": ["O*P",    "(o*)(~UP)", "", "STROKE", "fingerspelling: `O`"],
-  # "P*": ["P*P",    "(p*)(~UP)", "", "STROKE", "fingerspelling: `P`"],
-  # "Q*": ["KW*P",   "(q*)(~UP)", "", "STROKE", "fingerspelling: `Q`"],
-  # "R*": ["R*P",    "(r*)(~UP)", "", "STROKE", "fingerspelling: `R`"],
-  # "S*": ["S*P",    "(s*)(~UP)", "", "STROKE", "fingerspelling: `S`"],
-  # "T*": ["T*P",    "(t*)(~UP)", "", "STROKE", "fingerspelling: `T`"],
-  # "U*": ["*UP",    "(u*)(~UP)", "", "STROKE", "fingerspelling: `U`"],
-  # "V*": ["SR*P",   "(v*)(~UP)", "", "STROKE", "fingerspelling: `V`"],
-  # "W*": ["W*P",    "(w*)(~UP)", "", "STROKE", "fingerspelling: `W`"],
-  # "X*": ["KP*P",   "(x*)(~UP)", "", "STROKE", "fingerspelling: `X`"],
-  # "Y*": ["KWR*P",  "(y*)(~UP)", "", "STROKE", "fingerspelling: `Y`"],
-  # "Z*": ["STK*P",  "(z*)(~UP)", "", "STROKE", "fingerspelling: `Z`"],
+  # małe litery - muszą pasować do całego akordu (stroke) żeby nie pomylić ich z innymi zasadami
+  "a*": ["", "(a)(~LIT)",  "", "STROKE", "literowanie: `a`"],
+  "ą*": ["", "(ą)(~LIT)",  "", "STROKE", "literowanie: `ą`"],
+  "b*": ["", "(b.)(~LIT)", "", "STROKE", "literowanie: `b`"],
+  "c*": ["", "(c.)(~LIT)", "", "STROKE", "literowanie: `c`"],
+  "ć*": ["", "(ć.)(~LIT)", "", "STROKE", "literowanie: `ć`"],
+  "d*": ["", "(d.)(~LIT)", "", "STROKE", "literowanie: `d`"],
+  "e*": ["", "(e)(~LIT)",  "", "STROKE", "literowanie: `e`"],
+  "ę*": ["", "(ę)(~LIT)",  "", "STROKE", "literowanie: `ę`"],
+  "f*": ["", "(f.)(~LIT)", "", "STROKE", "literowanie: `f`"],
+  "g*": ["", "(g.)(~LIT)", "", "STROKE", "literowanie: `g`"],
+  "h*": ["", "(h.)(~LIT)", "", "STROKE", "literowanie: `h`"],
+  "i*": ["", "(i)(~LIT)",  "", "STROKE", "literowanie: `i`"],
+  "j*": ["", "(j)(~LIT)",  "", "STROKE", "literowanie: `j`"],
+  "k*": ["", "(k.)(~LIT)", "", "STROKE", "literowanie: `k`"],
+  "l*": ["", "(l.)(~LIT)", "", "STROKE", "literowanie: `l`"],
+  "ł*": ["", "(ł.)(~LIT)", "", "STROKE", "literowanie: `ł`"],
+  "m*": ["", "(m.)(~LIT)", "", "STROKE", "literowanie: `m`"],
+  "n*": ["", "(n.)(~LIT)", "", "STROKE", "literowanie: `n`"],
+  "ń*": ["", "(ń~)(~LIT)", "", "STROKE", "literowanie: `ń`"],
+  "o*": ["", "(o)(~LIT)",  "", "STROKE", "literowanie: `o`"],
+  "ó*": ["", "(ó)(~LIT)(~ALT)",  "", "STROKE", "literowanie: `ó`"],
+  "p*": ["", "(p.)(~LIT)", "", "STROKE", "literowanie: `p`"],
+  "q*": ["", "(q~)(~LIT)", "", "STROKE", "literowanie: `q`"],
+  "r*": ["", "(r.)(~LIT)", "", "STROKE", "literowanie: `r`"],
+  "s*": ["", "(s.)(~LIT)", "", "STROKE", "literowanie: `s`"],
+  "ś*": ["", "(ś.)(~LIT)", "", "STROKE", "literowanie: `ś`"],
+  "t*": ["", "(t.)(~LIT)", "", "STROKE", "literowanie: `t`"],
+  "u*": ["", "(u)(~LIT)",  "", "STROKE", "literowanie: `u`"],
+  "v*": ["", "(v~)(~LIT)", "", "STROKE", "literowanie: `v`"],
+  "w*": ["", "(w.)(~LIT)", "", "STROKE", "literowanie: `w`"],
+  "x*": ["", "(x.)(~LIT)", "", "STROKE", "literowanie: `x`"],
+  "y*": ["", "(y)(~LIT)",  "", "STROKE", "literowanie: `y`"],
+  "z*": ["", "(z.)(~LIT)", "", "STROKE", "literowanie: `z`"],
+  # TODO: JĘZYK: Jak literować `ż`?
+  "ż*": ["", "(rz.)(~LIT)", "", "STROKE", "literowanie: `ż`"],
+  "ź*": ["", "(ź.)(~LIT)", "", "STROKE", "literowanie: `ź`"],
 
-  # symbole
+  # Duże litery
+  "A*": ["", "(a*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `A`"],
+  "Ą*": ["", "(ą*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ą`"],
+  "B*": ["", "(b*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `B`"],
+  "C*": ["", "(c*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `C`"],
+  "Ć*": ["", "(ć*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ć`"],
+  "D*": ["", "(d*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `D`"],
+  "E*": ["", "(e*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `E`"],
+  "Ę*": ["", "(ę*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ę`"],
+  "F*": ["", "(f*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `F`"],
+  "G*": ["", "(g*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `G`"],
+  "H*": ["", "(h*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `H`"],
+  "I*": ["", "(i*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `K`"],
+  "L*": ["", "(l*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `L`"],
+  "Ł*": ["", "(ł*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ł`"],
+  "M*": ["", "(m*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `M`"],
+  "N*": ["", "(n*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `N`"],
+  "Ń*": ["", "(ń*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ń`"],
+  "O*": ["", "(o*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `O`"],
+  "Ó*": ["", "(ó*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ó`"],
+  "P*": ["", "(p*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `P`"],
+  "Q*": ["", "(q*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Q`"],
+  "R*": ["", "(r*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `R`"],
+  "S*": ["", "(s*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `S`"],
+  "Ś*": ["", "(ś*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ś`"],
+  "T*": ["", "(t*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `T`"],
+  "U*": ["", "(u*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `U`"],
+  "V*": ["", "(v*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `V`"],
+  "W*": ["", "(w*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `W`"],
+  "X*": ["", "(x*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `X`"],
+  "Y*": ["", "(y*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Y`"],
+  "Z*": ["", "(z*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Z`"],
+  "Ż*": ["", "(ż*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ż`"],
+  "Ź*": ["", "(ź*)(~DUŻ)", "", "STROKE UPPERCASE", "literowanie: `Ź`"],
+
+  # Symbole
   "-":   ["L-LB",      "-",       "",  "",       "- (minus)"],
   # TODO: Zarezerwuj żeby EAU nie było wykorzystane w samogłoskach
   "/":   ["EAU",       "/",       "",  "",       "/ (ukośnik)"],
@@ -632,7 +588,7 @@
   # "CAP": ["KPA",       "{}",      "↑", "STROKE", "capitalizes next word"],
   # " ":   ["SP-S",      "",        "",  "RARE",   "explicit space (usually in dictionary by mistake)"],
 
-  # główne zasady dla liczb
+  # Główne zasady dla liczb
   "~#":  ["#",  "",    "#   #   #   #   #", "REFERENCE", "włącza tryb liczb"],
   "~1":  ["Z",  "1",   "",                  "REFERENCE", "1"],
   "~2":  ["K",  "2",   "",                  "REFERENCE", "2"],
@@ -648,7 +604,7 @@
   "~#I": ["AU", "",    "#⇄#",               "REFERENCE", "odwraca kolejność dwóch cyfr"],
   "~00": ["-Y", "00",  "",                  "REFERENCE", "dodaje dwa zera"],
 
-  # pojedyncze cyfry
+  # Pojedyncze cyfry
   "1":  ["", "(~1)(~#)", "", "", "liczba 1"],
   "2":  ["", "(~2)(~#)", "", "", "liczba 2"],
   "3":  ["", "(~3)(~#)", "", "", "liczba 3"],
@@ -703,7 +659,7 @@
   "79": ["", "(~7)(~9)(~#)", "", "", "liczba 79"],
   "89": ["", "(~8)(~9)(~#)", "", "", "liczba 89"],
 
-  # powtórzone dwie cyfry
+  # Powtórzone dwie cyfry
   "11": ["", "(~1)(1|~##)(~#)", "", "", "liczba 11"],
   "22": ["", "(~2)(2|~##)(~#)", "", "", "liczba 22"],
   "33": ["", "(~3)(3|~##)(~#)", "", "", "liczba 33"],
@@ -714,7 +670,7 @@
   "88": ["", "(~8)(8|~##)(~#)", "", "", "liczba 88"],
   "99": ["", "(~9)(9|~##)(~#)", "", "", "liczba 99"],
 
-  # odwrócone dwie cyfry
+  # Odwrócone dwie cyfry
   "21": ["", "(~2)(~1)(~#I)(~#)", "", "INVERSION", "liczba 21"],
   "31": ["", "(~3)(~1)(~#I)(~#)", "", "INVERSION", "liczba 31"],
   "32": ["", "(~3)(~2)(~#I)(~#)", "", "INVERSION", "liczba 32"],
@@ -756,7 +712,7 @@
   "97": ["", "(~9)(~7)(~#I)(~#)", "", "INVERSION", "liczba 97"],
   "98": ["", "(~9)(~8)(~#I)(~#)", "", "INVERSION", "liczba 98"],
 
-  # setki
+  # Setki
   "100": ["", "(~1)(~00)(~#)", "", "", "liczba 100"],
   "200": ["", "(~2)(~00)(~#)", "", "", "liczba 200"],
   "300": ["", "(~3)(~00)(~#)", "", "", "liczba 300"],
@@ -767,7 +723,7 @@
   "800": ["", "(~8)(~00)(~#)", "", "", "liczba 800"],
   "900": ["", "(~9)(~00)(~#)", "", "", "liczba 900"],
 
-  # ułamki
+  # Ułamki
   "1/2": ["", "(~1)(/)(~2)(~#)", "", "", "ułamek - 1/2"],
   "1/3": ["", "(~1)(/)(~3)(~#)", "", "", "ułamek - 1/3"],
   "1/4": ["", "(~1)(/)(~4)(~#)", "", "", "ułamek - 1/4"],

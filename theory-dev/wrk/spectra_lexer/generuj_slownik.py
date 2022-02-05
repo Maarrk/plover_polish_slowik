@@ -12,8 +12,17 @@ class Zasada:
     def __init__(self, klawisze: str, litery: str, flagi: str, numer_linii: int = 0) -> None:
         self.klawisze = klawisze
         self.litery = litery
-        self.referencyjna = 'REFERENCE' in flagi
         self.numer_linii = numer_linii
+
+        # TODO: Przemyśleć czy nie lepiej oznaczyć w szablonie dla których zasad robić wpis
+        # Docelowo ma być tak że słowa są brane ze słownika i tylko zamieniane na klawisze zasadami
+
+        # Zasada tylko do używania w innych zasadach, pownna mieć ~ w id
+        self.f_referencyjna = 'REFERENCE' in flagi
+        # Flaga UPPERCASE jest potrzebna żeby pogodzić generację słownika z lekserem dla literowania wielkich liter
+        self.f_duże_litery = 'UPPERCASE' in flagi
+        # Powoduje duplikat, ale nie zdecydowano jeszcze co z nim zrobić
+        self.f_duplikat = 'DUPLICATE' in flagi
 
     def __str__(self) -> str:
         return f'Zasada: "{self.klawisze}" -> "{self.litery}"'
@@ -61,7 +70,22 @@ with open('assets/rules.cson.in') as szablon_cson:
     # for i, linia in enumerate(zasady_json):
     #     print(f'{i}\t{linia}', end='')
     # zasady_json.seek(0)
-    zasady = json.load(zasady_json)
+    try:
+        zasady = json.load(zasady_json)
+    except json.JSONDecodeError as e:
+        zasady_json.seek(0)
+        linie_json = zasady_json.readlines()
+        print('------------')
+        # lineno zaczyna się od 1
+        print(linie_json[e.lineno - 3], end='')
+        print(linie_json[e.lineno - 2], end='')
+        print(linie_json[e.lineno - 1], end='')
+        print(' '*(e.colno - 2), '^')
+        print(linie_json[e.lineno + 0], end='')
+        print(linie_json[e.lineno + 1], end='')
+        print('------------')
+        raise e
+
     # print(zasady)
 
     # Zmień słownik list na słownik obiektów
@@ -135,7 +159,7 @@ with open('assets/rules.cson.in') as szablon_cson:
     słowa = []
 
     for id, zasada in zasady.items():
-        if zasada.referencyjna:
+        if zasada.f_referencyjna or zasada.f_duplikat:
             continue  # Nie twórz dla niej nowego słowa
 
         tekst = zasada.litery
@@ -149,6 +173,8 @@ with open('assets/rules.cson.in') as szablon_cson:
                 if '|' in m.group(1) else zasady[m.group(1)].litery
             tekst = tekst[:m.start()] + podmiana + tekst[m.end():]
 
+        if zasada.f_duże_litery:
+            tekst = tekst.upper()
         słowa.append((zasada.klawisze, tekst))
 
     # Posortuj słowa według kolejności klawiszy
