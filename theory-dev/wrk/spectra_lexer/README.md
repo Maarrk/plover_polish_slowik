@@ -7,5 +7,7 @@
 Żeby używać Spectra Lexer w normalnym oknie Plover z tymi zasadami trzeba wygenerować polski indeks i ręcznie go załadować do wtyczki. Na razie szybciej jest uruchamiać ją samodzielnie (opcje z `http` są dlatego że zdarzają się problemy z Qt w tym trybie).
 
 ```
-spectra_lexer index --keymap=assets/key_layout.cson --rules=assets/rules.cson --board-defs=assets/board_defs.cson --translations=wyniki/spektralny-slowik.json --index=wyniki/index.json && spectra_lexer http --http-port=8888 --keymap=assets/key_layout.cson --rules=assets/rules.cson --board-defs=assets/board_defs.cson --translations=wyniki/spektralny-slowik.json --index=wyniki/index.json
+python3 generuj_slownik.py && \
+spectra_lexer index --keymap=assets/key_layout.cson --rules=wyniki/rules.cson --board-defs=assets/board_defs.cson --translations=wyniki/spektralny-slowik.json --index=wyniki/index.json && \
+spectra_lexer http --http-port=8888 --keymap=assets/key_layout.cson --rules=wyniki/rules.cson --board-defs=assets/board_defs.cson --translations=wyniki/spektralny-slowik.json --index=wyniki/index.json
 ```
