@@ -4,7 +4,9 @@
 
 Na potrzeby tego zastosowania, jest wprowadzone kilka zmian od oryginalnego formatu. Reguły mogą mieć puste pole `keys`, co oznacza że mają mieć wszystkie klawisze reguł które są wymienione w polu `letters`.
 
-Wpisy w słowniku są generowane przez przetwarzanie listy słów zgodnie ze zdefiniowanymi zasadami. Jeśli jakiś wpis ma być włączony bezpośrednio do słownika musi mieć flagę `DICT`.
+Wpisy w słowniku są generowane przez przetwarzanie listy słów zgodnie ze zdefiniowanymi zasadami. Jeśli jakiś wpis ma być włączony bezpośrednio do słownika musi mieć flagę `DICT`. Zasady służące do przypisywania klawiszy sylabom mają mieć jedną z flag opisujących ich położenie w sylabie: `ONSET`, `NUCLEUS`, `CODA`.
+
+Pisząc szablon, dbaj o to aby poszczególne pola we wpisach z pewnej grupy zasad, były w tych samych kolumnach tekstu. To znacznie upraszcza ręczną edycję wielu wpisów jednocześnie.
 
 ## Uruchamianie
 

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import argparse
+import collections
 import json
 import os
 import re
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 from cson import CommentRemover
 
@@ -20,14 +21,44 @@ class Zasada:
         self.f_referencyjna = 'REFERENCE' in flagi
         # Flaga UPPERCASE jest potrzebna żeby pogodzić generację słownika z lekserem dla literowania wielkich liter
         self.f_duże_litery = 'UPPERCASE' in flagi
-        # Powoduje duplikat, ale nie zdecydowano jeszcze co z nim zrobić
-        self.f_duplikat = 'DUPLICATE' in flagi
+
+        # Fazy sylaby na potrzeby generowania klawiszy
+        self.f_nagłos = 'ONSET' in flagi
+        self.f_śródgłos = 'NUCLEUS' in flagi
+        self.f_wygłos = 'CODA' in flagi
+
+        # Uzupełniony tekst do słownika (self.litery ma inne zasady)
+        self.tekst = ''
+        if not self.do_uzupełnienia():
+            self.tekst = self.litery
 
     def __str__(self) -> str:
         return f'Zasada: "{self.klawisze}" -> "{self.litery}"'
 
     def do_uzupełnienia(self) -> bool:
         return self.klawisze == ''
+
+
+def uzupełnij_tekst(zasady: Dict[str, Zasada], id: str) -> None:
+    """Podmień odwołania do innych zasad na tekst
+    """
+    zasada = zasady[id]
+    tekst = zasada.litery
+    inna_zasada = re.compile(r'\(([^()]+)\)')
+    while True:  # Nie używam operatora := bo jest na razie zbyt świeży
+        # Szczegóły znalezionej innej zasady
+        m = inna_zasada.search(tekst)
+        if not m:
+            break
+        # Obsługa składni: (litery|id), wstaw litery
+        podmiana = m.group(1).split('|')[0] \
+            if '|' in m.group(1) else zasady[m.group(1)].litery
+        tekst = tekst[:m.start()] + podmiana + tekst[m.end():]
+
+    if zasada.f_duże_litery:
+        tekst = tekst.upper()
+
+    zasady[id].tekst = tekst
 
 
 def jest_pusta_zasada(zasady: Dict[Any, Zasada]) -> bool:
@@ -49,13 +80,37 @@ def połącz_klawisze(*args: str) -> str:
             prawa: str = strony[-1]
             if len(prawa) > 0:
                 zestaw = zestaw[:-len(prawa)] + prawa.lower()
-        indeksy.extend([kolejność.index(k) for k in zestaw])
+        try:
+            indeksy.extend([kolejność.index(k) for k in zestaw])
+        except ValueError as e:
+            print('Łączenie klawiszy', zestawy)
+            raise e
 
     indeksy = sorted(list(set(indeksy)))  # Posortowane bez powtórzeń
     wynik = ''.join([kolejność[i] for i in indeksy])
     if re.search(r'[JE~*IAU]', wynik):  # Por. system.py IMPLICIT_HYPHEN_KEYS
         wynik = wynik.replace('-', '')
     return wynik.upper()
+
+
+def wyciągnij_fragment_sylaby(zasady: Dict[str, Zasada], głosy: Dict[str, str], pozostałe_litery: str) -> Tuple[str, str]:
+    klawisze_fragmentu = ''
+    while True:
+        # Może być kilka niezależnych spółgłosek
+        # TODO: Zastanowić się co wtedy z kolejnością
+        znaleziono_głos = False
+        głos_maks_dł = max([len(tekst) for tekst in głosy])
+        maks_dł = min(len(pozostałe_litery), głos_maks_dł)
+        for dł in reversed(range(1, maks_dł + 1)):
+            if pozostałe_litery[:dł] in głosy:
+                klawisze_fragmentu = połącz_klawisze(
+                    klawisze_fragmentu, zasady[głosy[pozostałe_litery[:dł]]].klawisze)
+                pozostałe_litery = pozostałe_litery[dł:]
+                znaleziono_głos = True
+                break
+        if not znaleziono_głos:
+            break
+    return klawisze_fragmentu, pozostałe_litery
 
 
 with open('assets/rules.cson.in') as szablon_cson:
@@ -157,37 +212,100 @@ with open('assets/rules.cson.in') as szablon_cson:
             raise ValueError(
                 f'Nie udało się znaleźć klawiszy dla zasad: {", ".join(pozostałe)}')
 
+    os.makedirs('wyniki', exist_ok=True)
+
     with open('wyniki/rules.cson', 'w') as zasady_cson:
         zasady_cson.writelines(linie_szablonu)
 
-    słowa = []
+    słownik_plover = dict()
+
+    with open('wyniki/generuj_slownik.log', 'w') as log_generatora:
+
+        for id, zasada in zasady.items():
+            if not zasada.f_słownik:
+                continue  # Nie twórz dla niej nowego słowa
+
+            uzupełnij_tekst(zasady, id)
+
+            if zasada.klawisze not in słownik_plover:
+                słownik_plover[zasada.klawisze] = zasada.tekst
+            else:
+                log_generatora.write(
+                    f'Duplikat dla klawiszy `{zasada.klawisze}`: '
+                    f'"{zasada.tekst}", już jest "{słownik_plover[zasada.klawisze]}"\n')
+
+    # Zbuduj słowniki do szukania zasad dla fragmentów sylaby
+    nagłosy = dict()
+    śródgłosy = dict()
+    wygłosy = dict()
 
     for id, zasada in zasady.items():
-        if not zasada.f_słownik:
-            continue  # Nie twórz dla niej nowego słowa
+        if zasada.f_nagłos or zasada.f_śródgłos or zasada.f_wygłos:
+            uzupełnij_tekst(zasady, id)
+        else:
+            continue
 
-        tekst = zasada.litery
-        # Podmień odwołania do innych zasad na tekst
-        while True:  # Nie używam operatora := bo jest na razie zbyt świeży
-            m = inna_zasada.search(tekst)  # Szczegóły znalezionej innej zasady
-            if not m:
-                break
-            # Obsługa składni: (litery|id), wstaw litery
-            podmiana = m.group(1).split('|')[0] \
-                if '|' in m.group(1) else zasady[m.group(1)].litery
-            tekst = tekst[:m.start()] + podmiana + tekst[m.end():]
+        if zasada.f_nagłos:
+            nagłosy[zasada.tekst] = id
+        elif zasada.f_śródgłos:
+            śródgłosy[zasada.tekst] = id
+        elif zasada.f_wygłos:
+            wygłosy[zasada.tekst] = id
 
-        if zasada.f_duże_litery:
-            tekst = tekst.upper()
-        słowa.append((zasada.klawisze, tekst))
+    # Otwórz w trybie a - append, żeby dopisywać
+    with open('wyniki/generuj_slownik.log', 'a') as log_generatora:
+        with open('../../data/slownik') as podzielone_słowa:
+            for numer_linii, linia in enumerate(podzielone_słowa):
+
+                linia = linia.strip()
+                if linia.startswith('#'):
+                    continue
+
+                sylaby = linia.split('=')
+                klawisze_słowa = []
+                nierozłożona_sylaba = False
+                for sylaba in sylaby:
+                    pozostałe_litery = sylaba
+
+                    klawisze_nagłosu, pozostałe_litery = wyciągnij_fragment_sylaby(
+                        zasady, nagłosy, pozostałe_litery)
+                    klawisze_śródgłosu, pozostałe_litery = wyciągnij_fragment_sylaby(
+                        zasady, śródgłosy, pozostałe_litery)
+                    klawisze_wygłosu, pozostałe_litery = wyciągnij_fragment_sylaby(
+                        zasady, wygłosy, pozostałe_litery)
+                    klawisze_sylaby = połącz_klawisze(
+                        klawisze_nagłosu, klawisze_śródgłosu, klawisze_wygłosu)
+
+                    if len(pozostałe_litery) > 0:
+                        log_generatora.write(
+                            f'Nie znaleziono rozkładu dla sylaby "{sylaba}" słowa "{linia}"\n')
+                        nierozłożona_sylaba = True
+                    else:
+                        klawisze_słowa.append(klawisze_sylaby)
+
+                if not nierozłożona_sylaba:
+                    tekst = ''.join(sylaby)
+                    klawisze = '/'.join(klawisze_słowa)
+                    # print(f'Rozłożono {linia} na {klawisze}')
+                    if klawisze not in słownik_plover:
+                        słownik_plover[klawisze] = tekst
+                    else:
+                        log_generatora.write(
+                            f'Duplikat dla klawiszy `{klawisze}`: '
+                            f'"{tekst}" wygenerowane z "{linia}", '
+                            f'już jest "{słownik_plover[klawisze]}"\n')
+
+                if numer_linii % 10000 == 0 and numer_linii != 0:
+                    print(f'Przetwarzanie linii {numer_linii}: {linia}')
 
     # Posortuj słowa według kolejności klawiszy
-    kolejność = '#XFZSKTPVLR-JE~*IAUCRLBSGTWOY'
-    słowa = sorted(słowa, key=lambda słowo:
-                   [kolejność.index(k) for k in słowo[0]])
+    kolejność = '#XFZSKTPVLR-JE~*IAUCRLBSGTWOY/'
+    plover_posortowany = collections.OrderedDict(
+        sorted(słownik_plover.items(), key=lambda wpis:
+               [kolejność.index(k) for k in wpis[0]]))
 
-    linie = [f'"{klawisze}": "{tekst}"' for klawisze, tekst in słowa]
+    linie = [f'"{klawisze}": "{tekst}"'
+             for klawisze, tekst in plover_posortowany.items()]
 
-    os.makedirs('wyniki', exist_ok=True)
     with open('wyniki/spektralny-slowik.json', 'w') as slownik:
         slownik.write('{\n' + ',\n'.join(linie) + '\n}')
