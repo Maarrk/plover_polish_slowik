@@ -444,7 +444,7 @@
   ".tm":    ["-CST",     "tm",       "", "CODA", ""],
   ".tn":    ["-CLT",     "tn",       "", "CODA", ""],
   ".tp":    ["-BT",      "tp",       "", "CODA", ""],
-  ".tr":    ["-RT",      "tr",       "", "CODA", ""],
+  ".tr":    ["-RT",      "(.t)(.r)", "", "CODA INVERSION", ""],
   ".trz":   ["-SGT",     "trz",      "", "CODA", ""],
   ".ts":    ["-C",       "ts",       "", "CODA", ""],
   ".tt":    ["-T",       "tt",       "", "CODA", ""],

@@ -98,6 +98,7 @@ def wyciągnij_fragment_sylaby(zasady: Dict[str, Zasada], głosy: Dict[str, str]
     while True:
         # Może być kilka niezależnych spółgłosek
         # TODO: Zastanowić się co wtedy z kolejnością
+        # Na na razie Spectra Lexer nie rozpoznaje takich sylab, np. XZTA: zda
         znaleziono_głos = False
         głos_maks_dł = max([len(tekst) for tekst in głosy])
         maks_dł = min(len(pozostałe_litery), głos_maks_dł)
