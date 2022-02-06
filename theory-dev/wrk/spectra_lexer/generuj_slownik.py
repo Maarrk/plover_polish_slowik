@@ -218,7 +218,7 @@ with open('assets/rules.cson.in') as szablon_cson:
     with open('wyniki/rules.cson', 'w') as zasady_cson:
         zasady_cson.writelines(linie_szablonu)
 
-    słownik_plover = dict()
+    słownik_z_teorii = dict()
 
     with open('wyniki/generuj_slownik.log', 'w') as log_generatora:
 
@@ -228,12 +228,12 @@ with open('assets/rules.cson.in') as szablon_cson:
 
             uzupełnij_tekst(zasady, id)
 
-            if zasada.klawisze not in słownik_plover:
-                słownik_plover[zasada.klawisze] = zasada.tekst
+            if zasada.klawisze not in słownik_z_teorii:
+                słownik_z_teorii[zasada.klawisze] = zasada.tekst
             else:
                 log_generatora.write(
                     f'Duplikat dla klawiszy `{zasada.klawisze}`: '
-                    f'"{zasada.tekst}", już jest "{słownik_plover[zasada.klawisze]}"\n')
+                    f'"{zasada.tekst}", już jest "{słownik_z_teorii[zasada.klawisze]}"\n')
 
     # Zbuduj słowniki do szukania zasad dla fragmentów sylaby
     nagłosy = dict()
@@ -264,6 +264,8 @@ with open('assets/rules.cson.in') as szablon_cson:
                     f'Duplikat "{słowo}" w danych frekwencyjnych, z liczbami {liczba} i {frekwencja[słowo]}')
             else:
                 frekwencja[słowo] = liczba
+
+    słownik_ze_słów = dict()
 
     # Otwórz w trybie a - append, żeby dopisywać
     with open('wyniki/generuj_slownik.log', 'a') as log_generatora:
@@ -300,17 +302,21 @@ with open('assets/rules.cson.in') as szablon_cson:
                     tekst = ''.join(sylaby)
                     klawisze = '/'.join(klawisze_słowa)
                     # print(f'Rozłożono {linia} na {klawisze}')
-                    if klawisze not in słownik_plover:
-                        słownik_plover[klawisze] = tekst
+                    if (klawisze not in słownik_z_teorii) and (klawisze not in słownik_ze_słów):
+                        słownik_ze_słów[klawisze] = tekst
+                    elif klawisze in słownik_z_teorii:
+                        log_generatora.write(
+                            f'Duplikat dla klawiszy `{klawisze}`: '
+                            f'"{tekst}", już jest "{słownik_z_teorii[klawisze]}" zdefiniowane w teorii\n')
                     else:
-                        stare = słownik_plover[klawisze]
+                        stare = słownik_z_teorii[klawisze]
                         nowe = tekst
 
                         frekw_stare = frekwencja[stare] if stare in frekwencja else -1
                         frekw_nowe = frekwencja[nowe] if nowe in frekwencja else -1
 
                         if frekw_nowe > frekw_stare:
-                            słownik_plover[klawisze] = nowe
+                            słownik_z_teorii[klawisze] = nowe
 
                         log_generatora.write(
                             f'Duplikat dla klawiszy `{klawisze}`: '
@@ -321,14 +327,20 @@ with open('assets/rules.cson.in') as szablon_cson:
                 if numer_linii % 10000 == 0 and numer_linii != 0:
                     print(f'Przetwarzanie linii {numer_linii}: {linia}')
 
+    # Kod wyżej jest tak napisany żeby unikał duplikatów,
+    # na wszelki wypadek ważniejsze słowniki są na końcu żeby nadpisać poprzednie
+    słownik_całość = dict()
+    słownik_całość.update(słownik_ze_słów)
+    słownik_całość.update(słownik_z_teorii)
+
     # Posortuj słowa według kolejności klawiszy
     kolejność = '#XFZSKTPVLR-JE~*IAUCRLBSGTWOY/'
-    plover_posortowany = collections.OrderedDict(
-        sorted(słownik_plover.items(), key=lambda wpis:
+    słownik_całość = collections.OrderedDict(
+        sorted(słownik_całość.items(), key=lambda wpis:
                [kolejność.index(k) for k in wpis[0]]))
 
     linie = [f'"{klawisze}": "{tekst}"'
-             for klawisze, tekst in plover_posortowany.items()]
+             for klawisze, tekst in słownik_całość.items()]
 
     with open('wyniki/spektralny-slowik.json', 'w') as slownik:
         slownik.write('{\n' + ',\n'.join(linie) + '\n}')
