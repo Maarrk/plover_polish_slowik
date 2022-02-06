@@ -253,6 +253,18 @@ with open('assets/rules.cson.in') as szablon_cson:
         elif zasada.f_wygłos:
             wygłosy[zasada.tekst] = id
 
+    frekwencja = dict()
+    with open('../../data/frekwencja_Kazojc.csv', 'r') as dane_frekwencyjne:
+        for linia in dane_frekwencyjne:
+            linia = linia.strip()
+            słowo = linia.split('"')[1]
+            liczba = int(linia.split(',')[1])
+            if słowo in frekwencja:
+                raise ValueError(
+                    f'Duplikat "{słowo}" w danych frekwencyjnych, z liczbami {liczba} i {frekwencja[słowo]}')
+            else:
+                frekwencja[słowo] = liczba
+
     # Otwórz w trybie a - append, żeby dopisywać
     with open('wyniki/generuj_slownik.log', 'a') as log_generatora:
         with open('../../data/slownik') as podzielone_słowa:
@@ -291,10 +303,20 @@ with open('assets/rules.cson.in') as szablon_cson:
                     if klawisze not in słownik_plover:
                         słownik_plover[klawisze] = tekst
                     else:
+                        stare = słownik_plover[klawisze]
+                        nowe = tekst
+
+                        frekw_stare = frekwencja[stare] if stare in frekwencja else -1
+                        frekw_nowe = frekwencja[nowe] if nowe in frekwencja else -1
+
+                        if frekw_nowe > frekw_stare:
+                            słownik_plover[klawisze] = nowe
+
                         log_generatora.write(
                             f'Duplikat dla klawiszy `{klawisze}`: '
-                            f'"{tekst}" wygenerowane z "{linia}", '
-                            f'już jest "{słownik_plover[klawisze]}"\n')
+                            f'"{tekst}"{(" (frekwencja " + str(frekw_nowe) + ")") if frekw_nowe != -1 else ""}, '
+                            f'już jest "{stare}"{(" (frekwencja " + str(frekw_stare) + ")") if frekw_stare != -1 else ""}'
+                            f'{", zamieniam na nowe" if frekw_nowe > frekw_stare else ""}\n')
 
                 if numer_linii % 10000 == 0 and numer_linii != 0:
                     print(f'Przetwarzanie linii {numer_linii}: {linia}')
