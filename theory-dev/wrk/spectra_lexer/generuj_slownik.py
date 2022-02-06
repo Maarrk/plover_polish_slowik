@@ -14,9 +14,8 @@ class Zasada:
         self.litery = litery
         self.numer_linii = numer_linii
 
-        # TODO: Przemyśleć czy nie lepiej oznaczyć w szablonie dla których zasad robić wpis
-        # Docelowo ma być tak że słowa są brane ze słownika i tylko zamieniane na klawisze zasadami
-
+        # Wygeneruj wpis do słownika na tej podstawie
+        self.f_słownik = 'DICT' in flagi
         # Zasada tylko do używania w innych zasadach, pownna mieć ~ w id
         self.f_referencyjna = 'REFERENCE' in flagi
         # Flaga UPPERCASE jest potrzebna żeby pogodzić generację słownika z lekserem dla literowania wielkich liter
@@ -27,10 +26,13 @@ class Zasada:
     def __str__(self) -> str:
         return f'Zasada: "{self.klawisze}" -> "{self.litery}"'
 
+    def do_uzupełnienia(self) -> bool:
+        return self.klawisze == ''
+
 
 def jest_pusta_zasada(zasady: Dict[Any, Zasada]) -> bool:
     for zasada in zasady.values():
-        if zasada.klawisze == '':
+        if zasada.do_uzupełnienia():
             return True
     return False
 
@@ -113,7 +115,7 @@ with open('assets/rules.cson.in') as szablon_cson:
         zmieniono_zasadę = False  # Wykryj iteracje bez szans na ukończenie zadania
 
         for edytowane_id, zasada in zasady.items():
-            if zasada.klawisze != '':
+            if not zasada.do_uzupełnienia():
                 continue
 
             użyte_id = set()
@@ -131,17 +133,19 @@ with open('assets/rules.cson.in') as szablon_cson:
                     if '|' in m.group(1) else zasady[m.group(1)].litery
                 tekst = tekst[:m.start()] + podmiana + tekst[m.end():]
 
-            użyte_id_bez_klawiszy = {
-                id for id in użyte_id if zasady[id].klawisze == ''}
+            użyte_id_do_uzupełnienia = {
+                id for id in użyte_id if zasady[id].do_uzupełnienia()}
 
-            if len(użyte_id_bez_klawiszy) == 0:
+            if len(użyte_id_do_uzupełnienia) == 0:
                 # Mamy wszystkie składowe, można utworzyć ten wpis
                 utworzone_klawisze = połącz_klawisze(
                     *[zasady[id].klawisze for id in użyte_id])
+                klawisze_szablonu = zasada.klawisze
                 zasady[edytowane_id].klawisze = utworzone_klawisze
                 definicja = linie_szablonu[zasada.numer_linii - 1]
                 linie_szablonu[zasada.numer_linii - 1] = \
-                    definicja.replace('[""', f'["{utworzone_klawisze}"')
+                    definicja.replace(
+                        f'["{klawisze_szablonu}"', f'["{utworzone_klawisze}"')
                 zmieniono_zasadę = True
                 # print(f'Wygenerowano {zasady[edytowane_id]}')
 
@@ -149,7 +153,7 @@ with open('assets/rules.cson.in') as szablon_cson:
             break
         if not zmieniono_zasadę:
             pozostałe = [id for id, zasada in zasady.items()
-                         if zasada.klawisze == '']
+                         if zasada.do_uzupełnienia()]
             raise ValueError(
                 f'Nie udało się znaleźć klawiszy dla zasad: {", ".join(pozostałe)}')
 
@@ -159,7 +163,7 @@ with open('assets/rules.cson.in') as szablon_cson:
     słowa = []
 
     for id, zasada in zasady.items():
-        if zasada.f_referencyjna or zasada.f_duplikat:
+        if not zasada.f_słownik:
             continue  # Nie twórz dla niej nowego słowa
 
         tekst = zasada.litery

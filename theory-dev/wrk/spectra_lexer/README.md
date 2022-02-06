@@ -2,6 +2,10 @@
 
 Żeby móc iterować teorię, chcemy ją zapisać w sposób zrozumiały dla skryptów i potem automagicznie wygenerować większość słownika. Zamiast opracowywać nowy format, tu będą dane kompatybilne z wtyczką [Spectra Lexer](https://github.com/fourshade/spectra_lexer). Format reguł ma [formalny opis](https://github.com/fourshade/spectra_lexer/blob/master/doc/rules_format.txt).
 
+Na potrzeby tego zastosowania, jest wprowadzone kilka zmian od oryginalnego formatu. Reguły mogą mieć puste pole `keys`, co oznacza że mają mieć wszystkie klawisze reguł które są wymienione w polu `letters`.
+
+Wpisy w słowniku są generowane przez przetwarzanie listy słów zgodnie ze zdefiniowanymi zasadami. Jeśli jakiś wpis ma być włączony bezpośrednio do słownika musi mieć flagę `DICT`.
+
 ## Uruchamianie
 
 Żeby używać Spectra Lexer w normalnym oknie Plover z tymi zasadami trzeba wygenerować polski indeks i ręcznie go załadować do wtyczki. Na razie szybciej jest uruchamiać ją samodzielnie (opcje z `http` są dlatego że zdarzają się problemy z Qt w tym trybie).
