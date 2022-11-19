@@ -124,8 +124,5 @@ KEYMAPS = {
 
 DICTIONARIES_ROOT = 'asset:plover_polish_slowik:dictionaries'
 DEFAULT_DICTIONARIES = (
-    'slowik_user.json',
-    'slowik_suffixes.json',
-    'slowik_prefixes.json',
-    'slowik_roots.json',
+    'slowik_user.json'
 )
